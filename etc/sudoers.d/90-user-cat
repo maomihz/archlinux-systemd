@@ -1,0 +1,3 @@
+# Create cat user
+arch ALL=(ALL) NOPASSWD: ALL
+cat ALL=(ALL) NOPASSWD: ALL

@@ -1,0 +1,3 @@
+[cat]
+SigLevel = Optional TrustAll
+Server = https://aur.maomihz.com
