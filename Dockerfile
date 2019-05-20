@@ -1,20 +1,19 @@
-FROM archlinux/base
+FROM maomihz/arch:latest
 
-COPY mirrorlist /etc/pacman.d/
+COPY pacman.d/ /etc/pacman.d/
 
-RUN pacman -Syu --needed --noconfirm
+RUN pacman -Sy --needed --noconfirm go
+RUN pacman -S --needed --noconfirm ruby nodejs-lts-dubnium npm yarn
+RUN pacman -S --needed --noconfirm aurutils yay
+RUN pacman -S --needed --noconfirm oh-my-zsh-git pyenv \
+    rbenv ruby-build-git nodenv nodenv-node-build-git
 
-RUN pacman -S --needed --noconfirm base base-devel systemd-resolvconf
-RUN pacman -S --needed --noconfirm openssh supervisor curl wget zsh git vim tmux rsync
-RUN pacman -S --needed --noconfirm go nodejs python python2
+COPY --chown=cat:cat cat/ /home/cat/
+RUN install -o cat -g cat -d /aur; \
+    repo-add /aur/cat.db.tar.gz; \
+    chmod 700 /home/cat/.{gnupg,ssh}; \
+    chmod 600 /home/cat/.ssh/authorized_keys; \
+    chmod +x /home/cat/setup.sh
 
-COPY supervisor.d/ /etc/supervisor.d/
-COPY ssh/ /etc/ssh/
-COPY sudoers.d/ /etc/sudoers.d/
-
-RUN useradd -m -d /home/arch arch -s /usr/bin/zsh
-RUN bash -c 'echo arch:arch | chpasswd'
-
-RUN ln -sf /usr/lib/systemd/system/sshd.service /etc/systemd/system/multi-user.target.wants/sshd.service
-
+# CMD ["/lib/systemd/systemd"]
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]

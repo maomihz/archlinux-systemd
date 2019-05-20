@@ -1,0 +1,4 @@
+[cat]
+SigLevel = Never
+Server = file:///aur
+Server = https://aur.maomihz.com

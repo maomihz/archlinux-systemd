@@ -1,2 +1,0 @@
-# Create cat user
-arch ALL=(ALL) NOPASSWD: ALL
