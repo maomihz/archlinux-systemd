@@ -29,6 +29,7 @@ RUN rm -f /etc/systemd/system/*.wants/*; \
     ln -sf /dev/null /etc/systemd/system/tmp.mount; \
     ln -sf /usr/lib/systemd/system/sshd.service /etc/systemd/system/multi-user.target.wants/sshd.service
 
-RUN sed -i '$ aInclude = /etc/pacman.d/maomihz-aur' /etc/pacman.conf
+RUN sed -i '$ aInclude = /etc/pacman.d/maomihz-aur' /etc/pacman.conf; \
+    chmod 600 /etc/ssh/ssh_host_*_key
 
 CMD ["supervisord", "-c", "/etc/supervisord.conf", "-n"]
