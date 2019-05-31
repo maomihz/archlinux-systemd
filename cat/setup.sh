@@ -33,6 +33,9 @@ setup() {
     echo
     echo "SSH Public Key:"
     cat "$HOME/.ssh/id_rsa.pub"
+
+    # Update pacman database
+    sudo pacman -Sy
 }
 
 keys() {
