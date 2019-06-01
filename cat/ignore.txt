@@ -1,1 +1,3 @@
 android-file-transfer-git
+openssl-git
+terminus-terminal-git

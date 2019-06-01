@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ssh-genkey() {
+_ssh-genkey() {
     while [ ! -z "$1" ]; do
         if [ ! -f "$1" ]; then
             ssh-keygen -f "$1" -t rsa -b 2048 -N ""
@@ -9,7 +9,7 @@ ssh-genkey() {
     done
 }
 
-setup() {
+_setup() {
     REPO="/aur"
     if [ ! -d "$REPO" ]; then
         echo Repository "$REPO" does not exist.
@@ -29,7 +29,7 @@ setup() {
     popd
 
     # Generate ssh keys
-    ssh-genkey "$HOME/.ssh/id_rsa"
+    _ssh-genkey "$HOME/.ssh/id_rsa"
     echo
     echo "SSH Public Key:"
     cat "$HOME/.ssh/id_rsa.pub"
@@ -38,7 +38,7 @@ setup() {
     sudo pacman -Sy
 }
 
-keys() {
+_keys() {
     gpg --recv-keys \
     931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90 \
     474E22316ABF4785A88C6E8EA2C794A986419D8A \
@@ -53,12 +53,16 @@ keys() {
     6645B0A8C7005E78DB1D7864F99FFE0FEAE999BD
 }
 
-
-help() {
-    echo "Usage: $0 {setup|keys|help}"
+_git() {
+    aur repo -l | cut -f 1 | grep -e -git | xargs aur sync --nover --print --ignore-file=$HOME/ignore.txt
 }
 
-main() {
+
+_help() {
+    echo "Usage: $0 {setup|keys|git|help}"
+}
+
+_main() {
     CMD="$1"
     if [ ! -z "$CMD" ]; then
         shift 1
@@ -70,16 +74,19 @@ main() {
             echo $@
             ;;
         keys)
-            keys $@
+            _keys $@
+            ;;
+        git)
+            _git $@
             ;;
         help)
-            help $@
+            _help $@
             exit 1
             ;;
         *)
-            setup $@
+            _setup $@
             ;;
     esac
 }
 
-main $@
+_main $@
