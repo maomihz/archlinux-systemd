@@ -57,6 +57,11 @@ _git() {
     aur repo -l | cut -f 1 | grep -e -git | xargs aur sync --nover --print --ignore-file=$HOME/ignore.txt
 }
 
+_import() {
+    gpg --import --batch
+    gpg -aso- /dev/null
+}
+
 
 _help() {
     echo "Usage: $0 {setup|keys|git|help}"
@@ -78,6 +83,9 @@ _main() {
             ;;
         git)
             _git $@
+            ;;
+        import)
+            _import $@
             ;;
         help)
             _help $@

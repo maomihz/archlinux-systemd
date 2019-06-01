@@ -7,6 +7,7 @@ RUN pacman -S --needed --noconfirm ruby nodejs-lts-dubnium npm yarn
 RUN pacman -S --needed --noconfirm aurutils yay
 RUN pacman -S --needed --noconfirm oh-my-zsh-git pyenv \
     rbenv ruby-build-git nodenv nodenv-node-build-git
+RUN pacman -S --needed --noconfirm gotop-git
 
 COPY --chown=cat:cat cat/ /home/cat/
 RUN install -o cat -g cat -d /aur; \
