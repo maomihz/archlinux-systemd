@@ -10,7 +10,7 @@ RUN pacman -S --needed --noconfirm oh-my-zsh-git pyenv \
 RUN pacman -S --needed --noconfirm gotop-git
 
 COPY cat/ /home/cat/
-RUN chown -R cat:cat /home/cat
+RUN chown -R cat:cat /home/cat; \
     install -o cat -g cat -d /aur; \
     repo-add /aur/cat.db.tar.gz; \
     chmod 700 /home/cat/.{gnupg,ssh}; \
