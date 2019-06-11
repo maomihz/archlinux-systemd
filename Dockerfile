@@ -9,8 +9,9 @@ RUN pacman -S --needed --noconfirm oh-my-zsh-git pyenv \
     rbenv ruby-build-git nodenv nodenv-node-build-git
 RUN pacman -S --needed --noconfirm gotop-git
 
-COPY --chown=cat:cat cat/ /home/cat/
-RUN install -o cat -g cat -d /aur; \
+COPY cat/ /home/cat/
+RUN chown -R cat:cat /home/cat
+    install -o cat -g cat -d /aur; \
     repo-add /aur/cat.db.tar.gz; \
     chmod 700 /home/cat/.{gnupg,ssh}; \
     chmod 600 /home/cat/.ssh/authorized_keys; \
