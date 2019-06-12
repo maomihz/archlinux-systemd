@@ -7,5 +7,5 @@ RUN .pyenv/versions/3.7.3/bin/pip install jupyter jupyterlab --pre; \
 
 FROM maomihz/arch:build
 WORKDIR /home/cat
-COPY --from=0 /home/cat/.pyenv .
+COPY --from=0 /home/cat/.pyenv .pyenv
 RUN chown -R cat:cat .pyenv
