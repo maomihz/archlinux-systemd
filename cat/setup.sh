@@ -75,6 +75,9 @@ _main() {
 
 
     case "$CMD" in
+        setup)
+            _setup $@
+            ;;
         echo)
             echo $@
             ;;
