@@ -10,18 +10,19 @@ _ssh-genkey() {
 }
 
 _setup() {
-    REPO="/aur"
+    REPO="/data/aur"
+    REMOTE="https://aur.maomihz.com"
     if [ ! -d "$REPO" ]; then
+        mkdir "$REPO"
         echo Repository "$REPO" does not exist.
-        exit 1
     fi
 
     sudo chown -R cat:cat "$REPO"
     pushd "$REPO"
-    curl -LO https://aur.maomihz.com/cat.db.tar.gz \
-         -LO https://aur.maomihz.com/cat.db.tar.gz.sig \
-         -LO https://aur.maomihz.com/cat.files.tar.gz \
-         -LO https://aur.maomihz.com/cat.files.tar.gz.sig
+    curl -LO "$REMOTE"/cat.db.tar.gz \
+         -LO "$REMOTE"/cat.db.tar.gz.sig \
+         -LO "$REMOTE"/cat.files.tar.gz \
+         -LO "$REMOTE"/cat.files.tar.gz.sig
     for i in cat.{db,files}; do
         ln -sf "$i.tar.gz" "$i"
         ln -sf "$i.tar.gz.sig" "$i.sig"

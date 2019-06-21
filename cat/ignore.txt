@@ -1,7 +1,6 @@
 android-file-transfer-linux-git
 openssl-git
-caddy-git
 terminus-terminal-git
 powershell-git
-gallery-dl
 ungoogled-chromium-archlinux
+ungoogled-chromium
