@@ -1,18 +1,20 @@
 FROM maomihz/arch:build
 
-USER cat
-RUN pyenv init -; rbenv init -
-WORKDIR /home/cat/
-RUN python-build 3.7.3  .pyenv/versions/3.7.3
-RUN python-build 2.7.16 .pyenv/versions/2.7.16
-RUN ruby-build   2.6.3  .rbenv/versions/2.6.3
-RUN .pyenv/versions/3.7.3/bin/pip  install jupyter jupyterlab --pre; \
-    .pyenv/versions/3.7.3/bin/pip  install -U pip virtualenv httpie; \
-    .pyenv/versions/2.7.16/bin/pip install -U pip virtualenv; \
-    .rbenv/versions/2.6.3/bin/gem  install rails; \
-    .pyenv/bin/pyenv rehash; \
-    .rbenv/bin/rbenv rehash
+ENV PYENV_ROOT /home/cat/.pyenv
+RUN pyenv install 3.7.3
+RUN pyenv install 2.7.16
 
+ENV RBENV_ROOT /home/cat/.rbenv
+RUN rbenv install 2.6.3
+
+RUN ${PYENV_ROOT}/versions/3.7.3/bin/pip  install jupyter jupyterlab --pre; \
+    ${PYENV_ROOT}/versions/3.7.3/bin/pip  install -U pip virtualenv httpie; \
+    ${PYENV_ROOT}/versions/2.7.16/bin/pip install -U pip virtualenv;
+
+RUN ${RBENV_ROOT}/versions/2.6.3/bin/gem  install rails
+
+RUN pyenv rehash; \
+    rbenv rehash
 
 
 FROM maomihz/arch:build
